@@ -9,24 +9,15 @@ async function fetchUserData(userName) {
       },
     });
 
-    if (response.status === "404") {
+    const data = await response.json();
+
+    if (data.status === "404") {
       throw new Error("User not Found");
     }
 
-    const data = await response.json();
-
     const repos = await fetchLatestRepos(userName);
 
-    
-    return {
-      avatarUrl: data.avatar_url,
-      name: data.name,
-      bio: data.bio,
-      followers: data.followers,
-      following: data.following,
-      repoCount: data.public_repos,
-      repos,
-    };
+    return [data, repos];
   } catch (error) {
     console.log(error);
   }
@@ -44,7 +35,7 @@ async function fetchLatestRepos(userName) {
     );
 
     if (response.status === "404") {
-      throw new Error("User not Found");
+      throw new Error("Repos not Found");
     }
 
     const data = await response.json();
@@ -59,24 +50,25 @@ async function fetchLatestRepos(userName) {
 }
 
 function createUserCard(user) {
-  const { avatarUrl, name, bio, followers, following, repoCount, repos } = user;
   const card = document.createElement("div");
   const tagContainer = document.createElement("div");
   tagContainer.className = "tag-container";
-
-  repos.forEach((repo) => {
-    const tag = document.createElement("a");
-    tag.className = "tag";
-    tag.textContent = repo.name;
-    tag.href = repo.html_url;
-    tagContainer.appendChild(tag);
-  });
-
   card.className = "card";
+  if (user) {
+    const { avatar_url, name, bio, followers, following, public_repos } =
+      user[0];
 
-  card.innerHTML = `
+    user[1].forEach((repo) => {
+      const tag = document.createElement("a");
+      tag.className = "tag";
+      tag.textContent = repo.name;
+      tag.href = repo.html_url;
+      tagContainer.appendChild(tag);
+    });
+
+    card.innerHTML = `
     <img
-          src="${avatarUrl}"
+          src="${avatar_url}"
           class="profile-picture"
           alt=""
         />
@@ -88,11 +80,15 @@ function createUserCard(user) {
           <div class="socials">
             <p>${followers} Followers</p>
             <p>${following} Following</p>
-            <p>${repoCount} Repos</p>
+            <p>${public_repos} Repos</p>
           </div>
           ${tagContainer.outerHTML}
         </div>
   `;
+  } else {
+    card.innerHTML = `<h1>No User Found</h1>`;
+  }
+  console.log(user);
 
   return card;
 }
@@ -101,6 +97,7 @@ searchBar.addEventListener("keydown", async (e) => {
   if (e.key == "Enter") {
     document.querySelector(".card").remove();
     const user = await fetchUserData(e.target.value);
+
     const userCard = createUserCard(user);
     e.target.value = "";
     document.querySelector(".container").appendChild(userCard);
