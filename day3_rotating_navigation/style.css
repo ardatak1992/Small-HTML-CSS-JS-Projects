@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", "sans-serif";
+  background-color: #2d2d2d;
+  overflow-x: hidden;
+}
+
+.article-container {
+  display: flex;
+  background-color: white;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  transform-origin: top left;
+  transition: all 0.8s ease-out;
+  z-index: 1;
+  /* transform: rotateZ(-20deg); */
+}
+
+article {
+  
+  max-width: 1200px;
+  margin: 10rem;
+}
+
+#author {
+  font-style: italic;
+}
+
+.paragraph {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  line-height: 1.7rem;
+}
+
+img {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.button-bg {
+  cursor: pointer;
+  position: fixed;
+  border: none;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #ff7c6d;
+  top: -100px;
+  left: -100px;
+  transition: all 0.5s;
+  z-index: 4;
+}
+
+.cross-container {
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  width: 35px;
+  height: 35px;
+  z-index: 1;
+}
+
+.cross-container > div {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.cross-container > div:nth-child(1) {
+  transform: rotateZ(45deg);
+  transform-origin: 0%;
+}
+
+.cross-container > div:nth-child(2) {
+  top: 25px;
+  transform: rotateZ(-45deg);
+  transform-origin: 0%;
+}
+
+.button-container {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 140px;
+  left: 120px;
+  z-index: 1;
+}
+
+.button-container > div {
+  width: 90%;
+  height: 5px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.button-container > div:nth-child(2) {
+  transform: translateY(6px);
+  height: 4px;
+}
+
+.button-container > div:nth-child(3) {
+  transform: translateY(12px);
+  height: 3px;
+}
+
+.menu-container {
+  display: flex;
+  color: white;
+  opacity: 1;
+  flex-direction: column;
+  position: fixed;
+  justify-content: flex-end;
+  gap: 2rem;
+
+  width: 300px;
+  height: 600px;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+  padding-bottom: 5rem;
+  align-items: center;
+}
+
+.menu-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  opacity: 0.7;
+  transition: text-shadow 0.3s, transform 0.7s ease-out;
+  transform: translateX(-500px);
+}
+
+.menu-item:hover {
+  text-shadow: 5px 5px 5px rgba(255, 255, 255, 0.2),
+    -5px -5px 5px rgba(255, 255, 255, 0.2);
+  opacity: 1;
+}
