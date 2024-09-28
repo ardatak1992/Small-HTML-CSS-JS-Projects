@@ -86,9 +86,10 @@ function createUserCard(user) {
         </div>
   `;
   } else {
+    card.classList.add("no-user")
     card.innerHTML = `<h1>No User Found</h1>`;
   }
-  console.log(user);
+  
 
   return card;
 }
